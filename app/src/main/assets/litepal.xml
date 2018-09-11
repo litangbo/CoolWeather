@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <!-- 指定数据库名 -->
+    <dbname value="cool_weather" />
+    <!-- 指定数据库版本 -->
+    <version value="1" />
+
+    <!-- 指定所有映射模型 -->
+    <list>
+        <mapping class="com.jc.coolweather.db.Province"></mapping>
+        <mapping class="com.jc.coolweather.db.City"></mapping>
+        <mapping class="com.jc.coolweather.db.County"></mapping>
+    </list>
+
+    <!--
+       keep ：按类和字段名大小写作为表名和列名
+       upper ：将所有的类和字段名称以大写的方式作为表明和列名。
+       lower ：将所有的类和字段名称以小写的方式作为表明和列名。
+    -->
+    <cases value="keep" ></cases>
+
+    <!-- 在开发阶段调试的时候，将数据库文件存放在SD卡/sdcard/Android/data/<package name>/files/databases目录下 -->
+    <!-- 注意，此功能尽量只在调试的时候使用，把数据库文件存放在SD卡真的很不安全。 -->
+    <!-- 在litepal-1.3.2上支持，需要添加权限【实现将数据库保存到默认位置】 -->
+    <!--<storage value="external"></storage>-->
+    <!-- 在litepal-1.6.0上支持，需要添加权限、申请运行时权限【实现将数据库保存到SD卡指定位置】 -->
+    <storage value="litangbo/database" />
+</litepal>
