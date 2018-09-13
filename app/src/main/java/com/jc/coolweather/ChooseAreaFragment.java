@@ -2,6 +2,7 @@ package com.jc.coolweather;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -284,14 +285,17 @@ public class ChooseAreaFragment extends Fragment{
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                // Looper.prepare();
                 if(progressDialog == null){
                     // java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
-                    // Android中不能在子线程中刷新UI线程。那么问题来了，如果需要在子线程中刷新UI线程怎么办？
+                    // Android不允许在子线程中刷新UI线程。那么问题来了，如果需要在子线程中刷新UI线程怎么办？
+                    // 参考：https://blog.csdn.net/fulinwsuafcie/article/details/17189495
                     progressDialog = new ProgressDialog(activity);
                     progressDialog.setMessage("正在加载...");
                     progressDialog.setCanceledOnTouchOutside(false);
                 }
                 progressDialog.show();
+                Looper.loop();
             }
         });
     }
