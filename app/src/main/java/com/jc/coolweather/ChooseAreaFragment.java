@@ -1,7 +1,6 @@
 package com.jc.coolweather;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,8 +59,8 @@ public class ChooseAreaFragment extends Fragment{
     private List<Province> provinceList;
     /**查询的市列表*/
     private List<City> cityList;
-    /**查询的县列表*/
-    private List<County> countyList;
+//    /**查询的县列表*/
+//    private List<County> countyList;
 
     /**选中的省*/
     private Province selectedProvince;
@@ -89,7 +87,7 @@ public class ChooseAreaFragment extends Fragment{
         titleText = view.findViewById(R.id.title_text);
         backButton = view.findViewById(R.id.back_button);
         listView = view.findViewById(R.id.list_view);
-        // 创建andorid内置的简单列表项布局适配器：android.R.layout.simple_list_item_1
+        // 创建android内置的简单列表项布局适配器：android.R.layout.simple_list_item_1
         // getContext() might be null
         adapter = new ArrayAdapter<>(view.getContext(),android.R.layout.simple_list_item_1,dataList);
         listView.setAdapter(adapter);
@@ -117,8 +115,8 @@ public class ChooseAreaFragment extends Fragment{
                     // 获取选中的市，并查询该省下所有的县
                     selectedCity = cityList.get(i);
                     queryCounties();
-                }else if(currentLevel == LEVEL_COUNTY){
-                    /*String weatherId = countyList.get(i).getWeatherId();
+                }/*else if(currentLevel == LEVEL_COUNTY){
+                    String weatherId = countyList.get(i).getWeatherId();
                     if (getActivity() instanceof MainActivity) {
                         Intent intent = new Intent(getActivity(), WeatherActivity.class);
                         intent.putExtra("weather_id", weatherId);
@@ -129,8 +127,8 @@ public class ChooseAreaFragment extends Fragment{
                         activity.drawerLayout.closeDrawers();
                         activity.swipeRefresh.setRefreshing(true);
                         activity.requestWeather(weatherId);
-                    }*/
-                }
+                    }
+                }*/
             }
         });
         // 返回按钮点击监听
@@ -202,6 +200,9 @@ public class ChooseAreaFragment extends Fragment{
     private void queryCounties(){
         titleText.setText(selectedCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
+        List<County> countyList;
+        // typo 打印错误;打字（或排印）文稿的小错误
+        // Settings->Spelling->Add->"litepal"->Apply
         // org.litepal.exceptions.DataSupportException: The parameters in conditions are incorrect.
         // countyList = DataSupport.where("cityId",selectedCity.getId()+"").find(County.class);
         countyList = DataSupport.where("cityId=?",selectedCity.getId()+"").find(County.class);
@@ -239,7 +240,13 @@ public class ChooseAreaFragment extends Fragment{
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                // showProgressDialog();
+                showProgressDialog();
+                // 模拟网络不好的请求过程
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 // 注意是string()方法，而非toString()方法
                 String responseText = response.body().string();
                 boolean isOk = false;
@@ -255,11 +262,12 @@ public class ChooseAreaFragment extends Fragment{
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            closeProgressDialog();
                             if(LEVEL_PROVINCE == type){
                                 queryProvinces();
                             }else if(LEVEL_CITY == type){
                                 queryCities();
-                            }else if(LEVEL_COUNTY == type){
+                            }else{// 警告：Conditions ... is always true    if(LEVEL_COUNTY == type)
                                 queryCounties();
                             }
                         }
@@ -273,12 +281,19 @@ public class ChooseAreaFragment extends Fragment{
      * 显示进度对话框
      */
     private void showProgressDialog(){
-        if(progressDialog == null){
-            progressDialog = new ProgressDialog(activity);
-            progressDialog.setMessage("正在加载...");
-            progressDialog.setCanceledOnTouchOutside(false);
-        }
-        progressDialog.show();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(progressDialog == null){
+                    // java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
+                    // Android中不能在子线程中刷新UI线程。那么问题来了，如果需要在子线程中刷新UI线程怎么办？
+                    progressDialog = new ProgressDialog(activity);
+                    progressDialog.setMessage("正在加载...");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                }
+                progressDialog.show();
+            }
+        });
     }
 
     /**
