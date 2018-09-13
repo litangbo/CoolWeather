@@ -208,18 +208,18 @@ public class ChooseAreaFragment extends Fragment{
         // countyList = DataSupport.where("cityId",selectedCity.getId()+"").find(County.class);
         countyList = DataSupport.where("cityId=?",selectedCity.getId()+"").find(County.class);
         if(countyList.size() > 0){
-        dataList.clear();
-        for(County county : countyList){
-            dataList.add(county.getCountyName()+","+county.getWeatherId());
+            dataList.clear();
+            for(County county : countyList){
+                dataList.add(county.getCountyName()+","+county.getWeatherId());
+            }
+            adapter.notifyDataSetChanged();
+            listView.setSelection(0);
+            currentLevel = LEVEL_COUNTY;
+        }else{
+            String address = URL+"/"+selectedProvince.getProvinceCode()+"/"+selectedCity.getCityCode();
+            queryFromServer(address,LEVEL_COUNTY);
         }
-        adapter.notifyDataSetChanged();
-        listView.setSelection(0);
-        currentLevel = LEVEL_COUNTY;
-    }else{
-        String address = URL+"/"+selectedProvince.getProvinceCode()+"/"+selectedCity.getCityCode();
-        queryFromServer(address,LEVEL_COUNTY);
     }
-}
 
     /**
      * 从服务器查询省市县数据
@@ -292,6 +292,7 @@ public class ChooseAreaFragment extends Fragment{
                     // 参考：https://blog.csdn.net/fulinwsuafcie/article/details/17189495
                     progressDialog = new ProgressDialog(activity);
                     progressDialog.setMessage("正在加载...");
+                    // Ctrl+Q 查询文档
                     progressDialog.setCanceledOnTouchOutside(false);
                 }
                 progressDialog.show();
