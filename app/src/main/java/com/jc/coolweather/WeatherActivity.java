@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -55,6 +59,14 @@ public class WeatherActivity extends AppCompatActivity {
     /**键值编辑对象*/
     private SharedPreferences.Editor editor;
 
+    /**下拉刷新布局*/
+    public SwipeRefreshLayout swipeRefresh;
+
+    /**滑动菜单布局*/
+    public DrawerLayout drawerLayout;
+    /**城市导航切换按钮*/
+    private Button navButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,23 +90,44 @@ public class WeatherActivity extends AppCompatActivity {
         editor = prefs.edit();
         // 预先从缓存中解析天气数据
         String weatherString = prefs.getString("weather",null);
+        final String weatherId;
         if(weatherString != null){
             Weather weather = Utility.handleWeatherResponse(weatherString);
+            weatherId = weather.basic.weatherId;
             showWeatherInfo(weather);
         }else{
             // 无缓存时再去服务器查询天气数据
             Intent intent = getIntent();
-            String weatherId = intent.getStringExtra("weather_id");
+            weatherId = intent.getStringExtra("weather_id");
             weatherLayout.setVisibility(View.INVISIBLE);// 请求之前不展示控件
             requestWeather(weatherId);
         }
+        // 设置下拉刷新按钮颜色，并监听刷新事件
+        swipeRefresh = findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestWeather(weatherId);
+            }
+        });
+        // 滑动菜单功能实现
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navButton = findViewById(R.id.nav_button);
+        navButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 打开滑动菜单
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
     }
 
     /**
      * 根据天气id请求城市天气信息
      * @param weatherId
      */
-    private void requestWeather(final String weatherId){
+    public void requestWeather(final String weatherId){
         String weatherUrl = "http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9";
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
@@ -106,6 +139,8 @@ public class WeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(WeatherActivity.this,"获取天气信息失败",Toast.LENGTH_SHORT).show();
+                        // 刷新完成，隐藏刷新进度条
+                        swipeRefresh.setRefreshing(false);
                     }
                 });
             }
@@ -126,6 +161,8 @@ public class WeatherActivity extends AppCompatActivity {
                         }else{
                             Toast.makeText(WeatherActivity.this,"获取天气信息失败",Toast.LENGTH_SHORT).show();
                         }
+                        // 刷新完成，隐藏刷新进度条
+                        swipeRefresh.setRefreshing(false);
                     }
                 });
             }
@@ -150,7 +187,7 @@ public class WeatherActivity extends AppCompatActivity {
         weatherInfoText.setText(now.more.info);
         // 空气质量
         aqiText.setText(aqi.city.aqi);
-        aqiText.setText(aqi.city.pm25);
+        pm25Text.setText(aqi.city.pm25);
         // 建议信息
         comfortText.setText("舒适度："+suggestion.comfort.info);
         carWashText.setText("洗车指数："+suggestion.carWash.info);
