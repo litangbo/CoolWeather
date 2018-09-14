@@ -1,6 +1,8 @@
 package com.jc.coolweather;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -60,8 +62,8 @@ public class ChooseAreaFragment extends Fragment{
     private List<Province> provinceList;
     /**查询的市列表*/
     private List<City> cityList;
-//    /**查询的县列表*/
-//    private List<County> countyList;
+    /**查询的县列表*/
+    private List<County> countyList;
 
     /**选中的省*/
     private Province selectedProvince;
@@ -116,20 +118,21 @@ public class ChooseAreaFragment extends Fragment{
                     // 获取选中的市，并查询该省下所有的县
                     selectedCity = cityList.get(i);
                     queryCounties();
-                }/*else if(currentLevel == LEVEL_COUNTY){
+                }else if(currentLevel == LEVEL_COUNTY){
                     String weatherId = countyList.get(i).getWeatherId();
-                    if (getActivity() instanceof MainActivity) {
-                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                    Activity activity = getActivity();
+                    if (activity instanceof MainActivity) {
+                        Intent intent = new Intent(activity, WeatherActivity.class);
                         intent.putExtra("weather_id", weatherId);
                         startActivity(intent);
-                        getActivity().finish();
-                    } else if (getActivity() instanceof WeatherActivity) {
-                        WeatherActivity activity = (WeatherActivity) getActivity();
-                        activity.drawerLayout.closeDrawers();
-                        activity.swipeRefresh.setRefreshing(true);
-                        activity.requestWeather(weatherId);
-                    }
-                }*/
+                        activity.finish();
+                    }/* else if (activity instanceof WeatherActivity) {
+                        WeatherActivity weatherActivity = activity;
+                        weatherActivity.drawerLayout.closeDrawers();
+                        weatherActivity.swipeRefresh.setRefreshing(true);
+                        weatherActivity.requestWeather(weatherId);
+                    }*/
+                }
             }
         });
         // 返回按钮点击监听
@@ -201,7 +204,6 @@ public class ChooseAreaFragment extends Fragment{
     private void queryCounties(){
         titleText.setText(selectedCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
-        List<County> countyList;
         // typo 打印错误;打字（或排印）文稿的小错误
         // Settings->Spelling->Add->"litepal"->Apply
         // org.litepal.exceptions.DataSupportException: The parameters in conditions are incorrect.

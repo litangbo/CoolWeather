@@ -1,0 +1,265 @@
+http://guolin.tech/api/weather?cityid=CN101270106&key=bc0418b57b2d4918819d3974ac1285d9
+{
+    "HeWeather": [
+        {
+            "basic": {
+                "cid": "CN101270106",
+                "location": "双流",
+                "parent_city": "成都",
+                "admin_area": "四川",
+                "cnty": "中国",
+                "lat": "30.57324219",
+                "lon": "103.9227066",
+                "tz": "+8.00",
+                "city": "双流",
+                "id": "CN101270106",
+                "update": {
+                    "loc": "2018-09-14 13:45",
+                    "utc": "2018-09-14 05:45"
+                }
+            },
+            "update": {
+                "loc": "2018-09-14 13:45",
+                "utc": "2018-09-14 05:45"
+            },
+            "status": "ok",
+            "now": {
+                "cloud": "50",
+                "cond_code": "104",
+                "cond_txt": "阴",
+                "fl": "23",
+                "hum": "89",
+                "pcpn": "0.0",
+                "pres": "1017",
+                "tmp": "21",
+                "vis": "5",
+                "wind_deg": "89",
+                "wind_dir": "东风",
+                "wind_sc": "1",
+                "wind_spd": "2",
+                "cond": {
+                    "code": "104",
+                    "txt": "阴"
+                }
+            },
+            "daily_forecast": [
+                {
+                    "date": "2018-09-14",
+                    "cond": {
+                        "txt_d": "阴"
+                    },
+                    "tmp": {
+                        "max": "23",
+                        "min": "18"
+                    }
+                },
+                {
+                    "date": "2018-09-15",
+                    "cond": {
+                        "txt_d": "阴"
+                    },
+                    "tmp": {
+                        "max": "25",
+                        "min": "19"
+                    }
+                },
+                {
+                    "date": "2018-09-16",
+                    "cond": {
+                        "txt_d": "多云"
+                    },
+                    "tmp": {
+                        "max": "26",
+                        "min": "19"
+                    }
+                },
+                {
+                    "date": "2018-09-17",
+                    "cond": {
+                        "txt_d": "多云"
+                    },
+                    "tmp": {
+                        "max": "27",
+                        "min": "21"
+                    }
+                },
+                {
+                    "date": "2018-09-18",
+                    "cond": {
+                        "txt_d": "小雨"
+                    },
+                    "tmp": {
+                        "max": "26",
+                        "min": "20"
+                    }
+                },
+                {
+                    "date": "2018-09-19",
+                    "cond": {
+                        "txt_d": "阵雨"
+                    },
+                    "tmp": {
+                        "max": "24",
+                        "min": "20"
+                    }
+                },
+                {
+                    "date": "2018-09-20",
+                    "cond": {
+                        "txt_d": "阵雨"
+                    },
+                    "tmp": {
+                        "max": "25",
+                        "min": "17"
+                    }
+                }
+            ],
+            "hourly": [
+                {
+                    "cloud": "88",
+                    "cond_code": "100",
+                    "cond_txt": "晴",
+                    "dew": "16",
+                    "hum": "85",
+                    "pop": "7",
+                    "pres": "1011",
+                    "time": "2018-09-14 16:00",
+                    "tmp": "23",
+                    "wind_deg": "185",
+                    "wind_dir": "南风",
+                    "wind_sc": "1-2",
+                    "wind_spd": "1"
+                },
+                {
+                    "cloud": "95",
+                    "cond_code": "100",
+                    "cond_txt": "晴",
+                    "dew": "18",
+                    "hum": "88",
+                    "pop": "7",
+                    "pres": "1009",
+                    "time": "2018-09-14 19:00",
+                    "tmp": "21",
+                    "wind_deg": "265",
+                    "wind_dir": "西风",
+                    "wind_sc": "1-2",
+                    "wind_spd": "10"
+                },
+                {
+                    "cloud": "96",
+                    "cond_code": "100",
+                    "cond_txt": "晴",
+                    "dew": "18",
+                    "hum": "92",
+                    "pop": "7",
+                    "pres": "1012",
+                    "time": "2018-09-14 22:00",
+                    "tmp": "20",
+                    "wind_deg": "263",
+                    "wind_dir": "西风",
+                    "wind_sc": "1-2",
+                    "wind_spd": "9"
+                },
+                {
+                    "cloud": "98",
+                    "cond_code": "100",
+                    "cond_txt": "晴",
+                    "dew": "17",
+                    "hum": "95",
+                    "pop": "7",
+                    "pres": "1014",
+                    "time": "2018-09-15 01:00",
+                    "tmp": "19",
+                    "wind_deg": "270",
+                    "wind_dir": "西风",
+                    "wind_sc": "1-2",
+                    "wind_spd": "3"
+                },
+                {
+                    "cloud": "86",
+                    "cond_code": "100",
+                    "cond_txt": "晴",
+                    "dew": "18",
+                    "hum": "97",
+                    "pop": "7",
+                    "pres": "1013",
+                    "time": "2018-09-15 04:00",
+                    "tmp": "19",
+                    "wind_deg": "269",
+                    "wind_dir": "西风",
+                    "wind_sc": "1-2",
+                    "wind_spd": "5"
+                },
+                {
+                    "cloud": "84",
+                    "cond_code": "100",
+                    "cond_txt": "晴",
+                    "dew": "18",
+                    "hum": "96",
+                    "pop": "7",
+                    "pres": "1015",
+                    "time": "2018-09-15 07:00",
+                    "tmp": "19",
+                    "wind_deg": "89",
+                    "wind_dir": "东风",
+                    "wind_sc": "1-2",
+                    "wind_spd": "6"
+                },
+                {
+                    "cloud": "93",
+                    "cond_code": "100",
+                    "cond_txt": "晴",
+                    "dew": "18",
+                    "hum": "85",
+                    "pop": "7",
+                    "pres": "1015",
+                    "time": "2018-09-15 10:00",
+                    "tmp": "22",
+                    "wind_deg": "354",
+                    "wind_dir": "北风",
+                    "wind_sc": "1-2",
+                    "wind_spd": "11"
+                },
+                {
+                    "cloud": "96",
+                    "cond_code": "100",
+                    "cond_txt": "晴",
+                    "dew": "17",
+                    "hum": "83",
+                    "pop": "7",
+                    "pres": "1013",
+                    "time": "2018-09-15 13:00",
+                    "tmp": "23",
+                    "wind_deg": "50",
+                    "wind_dir": "东北风",
+                    "wind_sc": "1-2",
+                    "wind_spd": "11"
+                }
+            ],
+            "aqi": {
+                "city": {
+                    "aqi": "39",
+                    "pm25": "27",
+                    "qlty": "优"
+                }
+            },
+            "suggestion": {
+                "comf": {
+                    "type": "comf",
+                    "brf": "舒适",
+                    "txt": "白天不太热也不太冷，风力不大，相信您在这样的天气条件下，应会感到比较清爽和舒适。"
+                },
+                "sport": {
+                    "type": "sport",
+                    "brf": "较适宜",
+                    "txt": "阴天，较适宜进行各种户内外运动。"
+                },
+                "cw": {
+                    "type": "cw",
+                    "brf": "不宜",
+                    "txt": "不宜洗车，未来24小时内有雨，如果在此期间洗车，雨水和路上的泥水可能会再次弄脏您的爱车。"
+                }
+            }
+        }
+    ]
+}

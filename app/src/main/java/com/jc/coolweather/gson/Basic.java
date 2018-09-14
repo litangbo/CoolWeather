@@ -14,11 +14,12 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Basic {
     /**城市名*/
-    @SerializedName("city")
+    @SerializedName("location")
     public String cityName;
     /**城市对应的天气id*/
     @SerializedName("id")
     public String weatherId;
+    public Update update;
 
     public class Update {
         /**天气的更新时间*/
