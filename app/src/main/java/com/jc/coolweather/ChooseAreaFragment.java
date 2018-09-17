@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.jc.coolweather.db.City;
 import com.jc.coolweather.db.County;
 import com.jc.coolweather.db.Province;
+import com.jc.coolweather.util.ConstUtil;
 import com.jc.coolweather.util.HttpUtil;
 import com.jc.coolweather.util.Utility;
 
@@ -36,8 +37,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class ChooseAreaFragment extends Fragment{
-    /**省市县数据查询地址前缀*/
-    public static final String URL = "http://guolin.tech/api/china";
 
     public static final int LEVEL_PROVINCE = 1;
     public static final int LEVEL_CITY = 2;
@@ -123,7 +122,7 @@ public class ChooseAreaFragment extends Fragment{
                     Activity activity = getActivity();
                     if (activity instanceof MainActivity) {
                         Intent intent = new Intent(activity, WeatherActivity.class);
-                        intent.putExtra("weather_id", weatherId);
+                        intent.putExtra(ConstUtil.KEY_WEATHER_ID, weatherId);
                         startActivity(intent);
                         activity.finish();
                     } else if (activity instanceof WeatherActivity) {
@@ -172,7 +171,7 @@ public class ChooseAreaFragment extends Fragment{
             currentLevel = LEVEL_PROVINCE;// 设置选中级别
         }else{
             // 数据库查询不到，再到服务器查询
-            String address = URL+"";
+            String address = ConstUtil.URL_REGION+"";
             queryFromServer(address,LEVEL_PROVINCE);
         }
     }
@@ -193,7 +192,7 @@ public class ChooseAreaFragment extends Fragment{
             listView.setSelection(0);
             currentLevel = LEVEL_CITY;
         }else{
-            String address = URL+"/"+selectedProvince.getProvinceCode();
+            String address = ConstUtil.URL_REGION+"/"+selectedProvince.getProvinceCode();
             queryFromServer(address,LEVEL_CITY);
         }
     }
@@ -218,7 +217,7 @@ public class ChooseAreaFragment extends Fragment{
             listView.setSelection(0);
             currentLevel = LEVEL_COUNTY;
         }else{
-            String address = URL+"/"+selectedProvince.getProvinceCode()+"/"+selectedCity.getCityCode();
+            String address = ConstUtil.URL_REGION+"/"+selectedProvince.getProvinceCode()+"/"+selectedCity.getCityCode();
             queryFromServer(address,LEVEL_COUNTY);
         }
     }
