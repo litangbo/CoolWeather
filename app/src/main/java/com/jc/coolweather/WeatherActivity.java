@@ -104,7 +104,7 @@ public class WeatherActivity extends AppCompatActivity {
                 // getSharedPreferences("data",MODE_PRIVATE);
                 PreferenceManager.getDefaultSharedPreferences(this);
         editor = prefs.edit();
-        /*// 预先从缓存中解析天气数据
+        // 预先从缓存中解析天气数据
         String weatherString = prefs.getString(ConstUtil.KEY_WEATHER,null);
         // final String weatherId;
         if(weatherString != null){
@@ -117,8 +117,8 @@ public class WeatherActivity extends AppCompatActivity {
             weatherId = intent.getStringExtra(ConstUtil.KEY_WEATHER_ID);
             weatherLayout.setVisibility(View.INVISIBLE);// 请求之前不展示控件
             requestWeather(weatherId);
-        }*/
-        // 修改初始化进入切换城市不更新的问题
+        }
+        /*// 修改初始化进入切换城市不更新的问题（初始化显示天气界面就不存在该问题）
         Intent intent = getIntent();
         weatherId = intent.getStringExtra(ConstUtil.KEY_WEATHER_ID);
         if(weatherId != null){
@@ -132,7 +132,7 @@ public class WeatherActivity extends AppCompatActivity {
                 weatherId = weather.basic.weatherId;
                 showWeatherInfo(weather);
             }
-        }
+        }*/
         // 设置下拉刷新按钮颜色，并监听刷新事件
         swipeRefresh = findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
