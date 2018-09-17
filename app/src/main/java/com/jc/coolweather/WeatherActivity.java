@@ -1,14 +1,13 @@
 package com.jc.coolweather;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -24,8 +23,6 @@ import com.jc.coolweather.gson.Suggestion;
 import com.jc.coolweather.gson.Weather;
 import com.jc.coolweather.util.HttpUtil;
 import com.jc.coolweather.util.Utility;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
@@ -67,6 +64,9 @@ public class WeatherActivity extends AppCompatActivity {
     /**城市导航切换按钮*/
     private Button navButton;
 
+    /**当前天气id*/
+    private String weatherId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +89,8 @@ public class WeatherActivity extends AppCompatActivity {
                 PreferenceManager.getDefaultSharedPreferences(this);
         editor = prefs.edit();
         // 预先从缓存中解析天气数据
-        String weatherString = prefs.getString("weather",null);
-        final String weatherId;
+       /* String weatherString = prefs.getString("weather",null);
+        // final String weatherId;
         if(weatherString != null){
             Weather weather = Utility.handleWeatherResponse(weatherString);
             weatherId = weather.basic.weatherId;
@@ -101,6 +101,20 @@ public class WeatherActivity extends AppCompatActivity {
             weatherId = intent.getStringExtra("weather_id");
             weatherLayout.setVisibility(View.INVISIBLE);// 请求之前不展示控件
             requestWeather(weatherId);
+        }*/
+        Intent intent = getIntent();
+        weatherId = intent.getStringExtra("weather_id");
+        if(weatherId != null){
+            weatherLayout.setVisibility(View.INVISIBLE);// 请求之前不展示控件
+            requestWeather(weatherId);
+        }else{
+            String weatherString = prefs.getString("weather",null);
+            // final String weatherId;
+            if(weatherString != null){
+                Weather weather = Utility.handleWeatherResponse(weatherString);
+                weatherId = weather.basic.weatherId;
+                showWeatherInfo(weather);
+            }
         }
         // 设置下拉刷新按钮颜色，并监听刷新事件
         swipeRefresh = findViewById(R.id.swipe_refresh);
@@ -128,6 +142,7 @@ public class WeatherActivity extends AppCompatActivity {
      * @param weatherId
      */
     public void requestWeather(final String weatherId){
+        this.weatherId = weatherId;
         String weatherUrl = "http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9";
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
